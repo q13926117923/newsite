@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title%}博客{% endblock title%}</title>
+	<link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="http://127.0.0.1:8000/static/main.css">
+	{% block css %}{% endblock css %}
+</head>
+<body>
+ 	<div class="navbar navbar-default" role="navigation">
+ 		<div class="container-fluid">
+ 			<div class="navbar header">
+ 				<a class="navbar-brand" href="/">二哈博客网</a>
+ 				<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+ 				</button> 
+ 				<ul class="nav navbar-nav">
+ 					<li><a href="/">首页</a></li>
+ 					<li><a href="{% url 'topic_list' %}">博客</a></li>
+ 				</ul>
+ 			</div>
+ 					
+ 		</div>
+ 	</div>
+
+	{% block content%}
+
+	{% endblock content%}
+	<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

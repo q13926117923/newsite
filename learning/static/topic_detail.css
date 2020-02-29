@@ -1,0 +1,10 @@
+.comment-area{
+	margin-top: 2em;
+}
+.comment-area-title{
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 0.4em;
+}
+.django-ckeditor-widget{
+	width: 100%;
+}

@@ -1,0 +1,57 @@
+.topic-more{
+	margin-top: 2em;
+}
+ul{
+	list-style-type: none;
+}
+.content{
+	margin-top: 70px;
+}
+.clear-float:after,
+.clear-float:before {
+	content: " ";
+	display:block;
+	clear: both;
+}
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9{
+	display: block;
+	position: relative;
+	min-height: 1px;
+	float: left;
+}
+
+.col-1 {
+	width: 10%;
+}
+.col-2 {
+	width: 20%;
+}
+.col-3 {
+	width: 30%;
+}
+.col-4 {
+	width: 40%;
+}
+.col-5 {
+	width: 50%;
+}
+.col-6 {
+	width: 60%;
+}
+.col-7 {
+	width: 70%;
+}
+.col-8 {
+	width: 80%;
+}
+.col-9 {
+	width: 90%;
+}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}我的网站{% endblock title %}
+{% block nav_topic_active %}active{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'learning/topic_list.css' %}">
+{% endblock css %}
+{% block content%}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {% block topic_list_title %}
+                <h4>博客列表：</h4>
+                
+              {% endblock topic_list_title %}
+            </h3> 
+          </div>
+          <div class="panel-body">
+            <p>
+            {%for topic in page_of_topics%}
+              <div class="topic">
+                <a href="{% url 'topic_detail' topic.pk %}">
+                  <h3>{{ topic.title }}</h3>
+                </a>
+                <div class="topic-info">
+                  <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>	
+                  分类:<a href="{% url 'topics_with_type' topic.Topic_Type.pk %}">{{topic.Topic_Type}}</a>
+                  <div style="display: inline-block;float: right;">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    {{topic.create_time|date:"Y-m-d"}}
+                  </div>
+                </div>
+                <p>作者：{{topic.author}} &nbsp;阅读：{{topic.get_read_num}}</p>
+                <p>{{topic.content|truncatechars:120|striptags}}</p>
+              </div>	
+            {%empty%}
+              <div class="topic">
+                <p>暂无博客</p>
+              </div>
+            {% endfor %}			
+            </p>
+          </div>{# 内容 #}
+        </div>
+        <div class="paginator">
+          <div aria-label="Page navigation">{# 页码 #}
+            <ul class="pagination">
+              <li>
+                {% if page_of_topics.has_previous %} {#判断是否有前页#}
+                  <a href="?page={{page_of_topics.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                {% else %}
+                  <span aria-hidden="true">&laquo;</span>
+                {% endif %}
+              </li>
+              {% for page_num in current_page_range %}
+                {% if page_num == page_of_topics.number %}
+                  <li class="active"><span>{{page_num}}</span></li>
+                {%else%}
+                  {% if page_num == '...' %}
+                     <li><span>{{page_num}}</span></li>
+                  {% else %} 
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                  {% endif %} 
+
+                {% endif %} 
+              {% endfor %}
+              <li>
+                {% if page_of_topics.has_next %}
+                  <a href="?page={{page_of_topics.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                {% else %}
+                  <span aria-hidden="true">&raquo;</span>
+                {% endif %}
+              </li>
+            </ul>
+            <div class="abc">(一共有{{topics|length}}篇主题，当前第{{page_of_topics.number}}页，
+            共有{{page_of_topics.paginator.num_pages}}页。)
+            </div>
+          </div>
+        </div>
+      </div>			
+      <div class="col-md-4">
+        <div class="panel panel-default"> {# 分类 #}
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <h4>分类：</h4>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <ul>				  
+            {% for topic_type in topic_types %}
+              <li>
+                <a href="{% url 'topics_with_type' topic_type.pk %}">{{topic_type.type_name}}({{topic_type.topic_count}})</a>
+              </li>
+            {% empty %}
+              <li>暂无分类</li>
+            {% endfor %}
+          </ul>
+          </div>
+        </div>
+        <div class="panel panel-default"> {# 日期归档 #}
+          <div class="panel-heading">日期归档</div>
+          <div class="panel-body">
+            <ul>
+              {% for topic_date,topic_count in topic_dates.items %}
+                <a href="{% url 'topics_with_date' topic_date.year topic_date.month %}">
+                  <li>{{topic_date|date:"Y年m月"}}({{topic_count}})</li>
+                </a>   
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>	
+  </div>
+
+{% endblock content%}
