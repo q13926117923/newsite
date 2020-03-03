@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
         user = auth.authenticate(username=username, password=password)#验证
         if user is None:
             raise forms.ValidationError('用户名或密码不正确') #直接抛出错误
-        cleaned_data['user'] = user
+        self.cleaned_data['user'] = user
         return self.cleaned_data
 
 class RegForm(forms.Form):
